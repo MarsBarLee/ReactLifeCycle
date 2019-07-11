@@ -9,19 +9,29 @@ class App extends Component {
     }
   }
 
-  componentDidMount () { // attach the data we get from the API to the state
-    fetch('http://jsonplaceholder.typicode.com/users') // grabbing this request
-    .then(res => { // res is response. now we do a callback method
-      return res.json(); // once we make a request, we make a reponse. take reponse, turn it into json, then go to data
+  async componentDidMount() {
+    var response = await fetch('http://jsonplaceholder.typicode.com/users')
+    const data = await response.json() // the above webpage is now a variable named json
+    console.log(data)
+    // this.setState({items:json.data}) // needs to also change isLoaded boolean
+    this.setState({
+      items:data, //replace this empty array, [] to json.results. NEEDS to be :
+      isLoaded: true
     })
-    .then(data => {; // array that has objects inside each indices, each object has key-value pairs
-      console.log(data); 
-      this.setState({
-        isLoaded: true, // change isLoaded to true before data is populated
-        items: data,
-      });
-    });
   }
+  // componentDidMount () { // attach the data we get from the API to the state
+  //   fetch('http://jsonplaceholder.typicode.com/users') // grabbing this request
+  //   .then(res => { // res is response. now we do a callback method
+  //     return res.json(); // once we make a request, we make a reponse. take reponse, turn it into json, then go to data
+  //   })
+  //   .then(data => {; // array that has objects inside each indices, each object has key-value pairs
+  //     console.log(data); 
+  //     this.setState({
+  //       isLoaded: true, // change isLoaded to true before data is populated
+  //       items: data,
+  //     });
+  //   });
+  // }
 
   render() { //object deconstruction
     var { isLoaded , items} = this.state // shorthand so don't need 
